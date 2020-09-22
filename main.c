@@ -16,7 +16,6 @@ struct Vertex {
 	char* Name;			// Уникальное имя вершины
 	int x;				// Координата x
 	int y;				// Координата y 
-	//int size_adj;			// Текущий размер списка смежности (нужно для записи в файл)
 	struct Edge* root;			// Указатель на начало списка смежности
 };
 
@@ -24,12 +23,11 @@ struct Vertex {
 struct Graph {
 	int size;			// Текущее кол-во вершин
 	struct Vertex* vertex;			// Массив вершин
-	//FILE* fd;			// Дескриптор файла
 };
 
 
 char* msgs[] = { "0. Quit", "1. Add Vertex", "2. Add Edge", "3. Delete Vertex and Edge", "4. Find", "5.Show ", "6.Time", "7.Random graph", "8.File use" };//  массив строк, диалоговых функций 
-const int NMsgs = sizeof(msgs) / sizeof(msgs[0]);// количество строк в массиве строк, орое автоматические считаетс
+const int NMsgs = sizeof(msgs) / sizeof(msgs[0]);// количество строк в массиве строк, которое автоматически считается
 
 
 
@@ -55,12 +53,11 @@ int dialog(const char* msgs[], int N)// функция для выбора де�
 	do {
 		puts(errmsg);
 		errmsg = "You are wrong. Repeate, please!";
-		for (i = 0; i < N; ++i)//откуда N берется?// цикл для вывода строк
+		for (i = 0; i < N; ++i)// цикл для вывода строк
 			puts(msgs[i]);
 		puts("Make your choice: --> ");
-		n = getInt(&rc);// что тут происходит или должно происходить
+		n = getInt(&rc);
 		if (n == 0) rc = 0;
-		//printf("rc=%d\n", rc);// в чем разница между rc и &rc?
 		printf("rc=%d\n", rc);
 	} while (rc < 0 || rc >= N);
 	return rc;
@@ -90,7 +87,6 @@ int AddV(struct Tree* pgraph, char* nameF_dot) {
 
 /* Функция вставки новой вершины в граф. */
 int insert_graph(struct Graph* pgraph, char* name, int x, int y, int flag) {
-	//if (flag == -1) {
 	for (int i = 0; i < pgraph->size; ++i) {
 		if ((!strcmp(name, pgraph->vertex[i].Name)) || ((x == pgraph->vertex[i].x) && (y == pgraph->vertex[i].y)))
 			return 2;		// Найдена вершина с таким же именем или такими же координатами
@@ -101,8 +97,7 @@ int insert_graph(struct Graph* pgraph, char* name, int x, int y, int flag) {
 	pgraph->vertex[pgraph->size - 1].x = x;
 	pgraph->vertex[pgraph->size - 1].y = y;
 
-	pgraph->vertex[pgraph->size - 1].root = NULL;// вопрос
-//\}
+	pgraph->vertex[pgraph->size - 1].root = NULL;
 
 	return 0;
 }
@@ -462,7 +457,7 @@ int find(struct Graph* pgraph, char* name) {
 	struct Edge* tmp1;
 	ind = 0;
 	int clon = 0;
-	//return 0;
+
 	if (!tmp) {
 		printf("  From vertex \"%d - %d %s\" edges comes to: ", pgraph->vertex[ind_find].x, pgraph->vertex[ind_find].y, pgraph->vertex[ind_find].Name);
 		return 0;
